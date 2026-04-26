@@ -102,7 +102,8 @@ h2 {
 
 .threshold-panel,
 .heatmap-section,
-.tools-panel {
+.tools-panel,
+.io-panel {
   margin-bottom: 1rem;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -193,9 +194,11 @@ label span {
 
 .heatmap-wrap {
   display: grid;
-  grid-template-columns: auto minmax(88px, 0.9fr) minmax(0, 2.2fr);
-  gap: 0.45rem;
-  padding: 0 1rem 1rem;
+  grid-template-columns: auto minmax(74px, 0.78fr) minmax(0, 2fr);
+  gap: 0.35rem;
+  max-width: 100%;
+  overflow: hidden;
+  padding: 0 0.65rem 1rem;
 }
 
 .axis-title {
@@ -220,14 +223,15 @@ label span {
 .probability-scale,
 .impact-scale {
   color: var(--muted);
-  font-size: 0.66rem;
+  font-size: 0.6rem;
   font-weight: 750;
+  min-width: 0;
 }
 
 .probability-scale {
   display: grid;
   grid-template-rows: repeat(5, 1fr);
-  gap: 0.35rem;
+  gap: 0;
 }
 
 .axis-label {
@@ -235,13 +239,13 @@ label span {
   align-items: center;
   justify-content: flex-end;
   gap: 0.25rem;
-  min-height: 52px;
+  min-height: 0;
   text-align: right;
 }
 
 .axis-label strong {
   color: var(--ink);
-  font-size: 0.72rem;
+  font-size: 0.68rem;
 }
 
 .axis-label span {
@@ -252,7 +256,7 @@ label span {
   grid-column: 3;
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 0.35rem;
+  gap: 0.15rem;
 }
 
 .impact-scale .axis-label {
@@ -270,20 +274,20 @@ label span {
 .heatmap-stage {
   position: relative;
   min-width: 0;
+  overflow: hidden;
   aspect-ratio: 1 / 1;
 }
 
 .heatmap {
   display: grid;
   height: 100%;
-  grid-template-columns: repeat(5, minmax(42px, 1fr));
-  grid-template-rows: repeat(5, minmax(42px, 1fr));
-  gap: 0.35rem;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-rows: repeat(5, minmax(0, 1fr));
+  gap: 0;
 }
 
 .heat-cell {
   border: 1px solid var(--line);
-  border-radius: 8px;
   min-width: 0;
 }
 
@@ -295,7 +299,7 @@ label span {
 }
 
 .heatmap-arrows {
-  overflow: visible;
+  overflow: hidden;
 }
 
 .risk-arrow {
@@ -308,13 +312,13 @@ label span {
   position: absolute;
   z-index: 2;
   display: grid;
-  width: 28px;
-  height: 28px;
+  width: 24px;
+  height: 24px;
   border: 2px solid #fff;
   border-radius: 999px;
   box-shadow: 0 8px 20px rgba(18, 29, 44, 0.28);
   color: #fff;
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   font-weight: 900;
   line-height: 1;
   place-items: center;
@@ -344,7 +348,8 @@ label span {
   color: var(--red);
 }
 
-.tools-panel {
+.tools-panel,
+.io-panel {
   padding: 1rem;
 }
 
@@ -383,7 +388,6 @@ textarea {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.75rem;
-  margin-top: 0.75rem;
 }
 
 .import-button {
@@ -611,10 +615,22 @@ textarea {
 
   .heatmap-wrap {
     grid-template-columns: auto 170px minmax(0, 1fr);
+    gap: 0.45rem;
+    padding: 0 1rem 1rem;
   }
 
   .probability-scale,
   .impact-scale {
     font-size: 0.76rem;
+  }
+
+  .axis-label strong {
+    font-size: 0.72rem;
+  }
+
+  .risk-marker {
+    width: 28px;
+    height: 28px;
+    font-size: 0.68rem;
   }
 }

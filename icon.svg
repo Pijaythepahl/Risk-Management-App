@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-label="Risk Manager icon">
+  <rect width="512" height="512" rx="104" fill="#2467c9"/>
+  <rect x="88" y="96" width="336" height="320" rx="36" fill="#ffffff"/>
+  <rect x="128" y="144" width="72" height="72" rx="14" fill="#dff5ea"/>
+  <rect x="220" y="144" width="72" height="72" rx="14" fill="#fff0d5"/>
+  <rect x="312" y="144" width="72" height="72" rx="14" fill="#ffe1e4"/>
+  <rect x="128" y="236" width="72" height="72" rx="14" fill="#fff0d5"/>
+  <rect x="220" y="236" width="72" height="72" rx="14" fill="#ffe1e4"/>
+  <rect x="312" y="236" width="72" height="72" rx="14" fill="#ffe1e4"/>
+  <rect x="128" y="328" width="72" height="48" rx="14" fill="#dff5ea"/>
+  <rect x="220" y="328" width="72" height="48" rx="14" fill="#dff5ea"/>
+  <rect x="312" y="328" width="72" height="48" rx="14" fill="#fff0d5"/>
+  <path d="M150 350 L246 263 L356 174" fill="none" stroke="#18202b" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M326 174 H356 V204" fill="none" stroke="#18202b" stroke-width="20" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="150" cy="350" r="22" fill="#18845b" stroke="#ffffff" stroke-width="10"/>
+  <circle cx="246" cy="263" r="22" fill="#b45f05" stroke="#ffffff" stroke-width="10"/>
+  <circle cx="356" cy="174" r="22" fill="#bd2837" stroke="#ffffff" stroke-width="10"/>
+</svg>

@@ -4,6 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Risk Board</title>
+    <meta name="theme-color" content="#2467c9">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" href="icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="icon-192.png">
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
@@ -110,13 +114,6 @@
               </select>
             </label>
           </div>
-          <div class="io-actions">
-            <button id="exportButton" type="button">Export JSON</button>
-            <label class="import-button">
-              Import JSON
-              <input id="importInput" type="file" accept="application/json,.json">
-            </label>
-          </div>
         </section>
 
         <section class="risk-list-section" aria-label="Risks">
@@ -129,6 +126,20 @@
             <h2>No risks yet</h2>
             <p>Add your first risk to start tracking exposure, mitigation, and residual risk.</p>
             <button class="primary-action" type="button" id="emptyAddButton">Add Risk</button>
+          </div>
+        </section>
+
+        <section class="io-panel" aria-label="Import and export">
+          <div class="section-heading">
+            <h2>Data</h2>
+            <span>Local JSON backup</span>
+          </div>
+          <div class="io-actions">
+            <button id="exportButton" type="button">Export JSON</button>
+            <label class="import-button">
+              Import JSON
+              <input id="importInput" type="file" accept="application/json,.json">
+            </label>
           </div>
         </section>
       </main>
