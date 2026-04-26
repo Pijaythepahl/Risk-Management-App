@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Risk Board</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Risk management</p>
+          <h1>Risk Board</h1>
+        </div>
+        <button class="primary-action" id="newRiskButton" type="button">Add Risk</button>
+      </header>
+
+      <main>
+        <section class="threshold-panel" aria-label="Risk acceptance settings">
+          <div>
+            <h2>Risk Appetite</h2>
+            <p>This determines which risks count as acceptable.</p>
+          </div>
+          <label class="threshold-control">
+            <span>Appetite level</span>
+            <select id="thresholdInput">
+              <option value="4">Very low appetite</option>
+              <option value="8">Low appetite</option>
+              <option value="12">Balanced appetite</option>
+              <option value="16">Elevated appetite</option>
+              <option value="20">High appetite</option>
+              <option value="25">Very high appetite</option>
+            </select>
+          </label>
+        </section>
+
+        <section class="dashboard-grid" aria-label="Risk dashboard">
+          <article class="metric-card">
+            <span>Total Risks</span>
+            <strong id="totalRisks">0</strong>
+          </article>
+          <article class="metric-card danger">
+            <span>High Risks</span>
+            <strong id="highRisks">0</strong>
+          </article>
+          <article class="metric-card success">
+            <span>Acceptable</span>
+            <strong id="acceptableRisks">0</strong>
+          </article>
+          <article class="metric-card warning">
+            <span>Overdue</span>
+            <strong id="overdueRisks">0</strong>
+          </article>
+          <article class="metric-card">
+            <span>Average Score</span>
+            <strong id="averageScore">0</strong>
+          </article>
+        </section>
+
+        <section class="heatmap-section" aria-label="Risk heatmap">
+          <div class="section-heading">
+            <h2>5x5 Heatmap</h2>
+            <span>Inherent risk to residual risk</span>
+          </div>
+          <div class="heatmap-wrap">
+            <div class="axis-title probability-title">Probability</div>
+            <div class="probability-scale" id="probabilityScale" aria-hidden="true"></div>
+            <div class="heatmap-stage">
+              <div class="heatmap" id="heatmap"></div>
+              <svg class="heatmap-arrows" id="heatmapArrows" aria-hidden="true"></svg>
+              <div class="heatmap-markers" id="heatmapMarkers"></div>
+            </div>
+            <div class="axis-title impact-title">Impact</div>
+            <div class="impact-scale" id="impactScale" aria-hidden="true"></div>
+          </div>
+        </section>
+
+        <section class="tools-panel" aria-label="Risk tools">
+          <div class="filters">
+            <label>
+              <span>Status</span>
+              <select id="statusFilter">
+                <option value="all">All statuses</option>
+                <option>Open</option>
+                <option>Mitigating</option>
+                <option>Accepted</option>
+                <option>Closed</option>
+              </select>
+            </label>
+            <label>
+              <span>Category</span>
+              <select id="categoryFilter">
+                <option value="all">All categories</option>
+              </select>
+            </label>
+            <label>
+              <span>Acceptability</span>
+              <select id="acceptabilityFilter">
+                <option value="all">All</option>
+                <option value="acceptable">Acceptable</option>
+                <option value="unacceptable">Unacceptable</option>
+              </select>
+            </label>
+            <label>
+              <span>Sort</span>
+              <select id="sortSelect">
+                <option value="score-desc">Highest score</option>
+                <option value="due-asc">Due date</option>
+              </select>
+            </label>
+          </div>
+          <div class="io-actions">
+            <button id="exportButton" type="button">Export JSON</button>
+            <label class="import-button">
+              Import JSON
+              <input id="importInput" type="file" accept="application/json,.json">
+            </label>
+          </div>
+        </section>
+
+        <section class="risk-list-section" aria-label="Risks">
+          <div class="section-heading">
+            <h2>Risks</h2>
+            <span id="visibleCount">0 shown</span>
+          </div>
+          <div class="risk-list" id="riskList"></div>
+          <div class="empty-state" id="emptyState">
+            <h2>No risks yet</h2>
+            <p>Add your first risk to start tracking exposure, mitigation, and residual risk.</p>
+            <button class="primary-action" type="button" id="emptyAddButton">Add Risk</button>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <dialog class="risk-dialog" id="riskDialog">
+      <form method="dialog" id="riskForm">
+        <div class="dialog-heading">
+          <div>
+            <p class="eyebrow">Risk details</p>
+            <h2 id="dialogTitle">Add Risk</h2>
+          </div>
+          <button class="icon-button" value="cancel" type="button" id="closeDialogButton" aria-label="Close">x</button>
+        </div>
+
+        <input id="riskId" type="hidden">
+
+        <label>
+          <span>Title</span>
+          <input id="titleInput" type="text" required maxlength="120">
+        </label>
+
+        <label>
+          <span>Description</span>
+          <textarea id="descriptionInput" rows="3" required></textarea>
+        </label>
+
+        <div class="form-grid">
+          <label>
+            <span>Category</span>
+            <input id="categoryInput" type="text" required list="categorySuggestions" maxlength="60">
+            <datalist id="categorySuggestions"></datalist>
+          </label>
+          <label>
+            <span>Status</span>
+            <select id="statusInput" required>
+              <option>Open</option>
+              <option>Mitigating</option>
+              <option>Accepted</option>
+              <option>Closed</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="score-row">
+          <label>
+            <span>Probability</span>
+            <input id="probabilityInput" type="range" min="1" max="5" step="1">
+            <strong id="probabilityValue">3</strong>
+          </label>
+          <label>
+            <span>Impact</span>
+            <input id="impactInput" type="range" min="1" max="5" step="1">
+            <strong id="impactValue">3</strong>
+          </label>
+          <div class="score-preview">
+            <span>Risk score</span>
+            <strong id="riskScorePreview">9</strong>
+          </div>
+        </div>
+
+        <label>
+          <span>Mitigation Action</span>
+          <textarea id="mitigationInput" rows="3"></textarea>
+        </label>
+
+        <label>
+          <span>Due Date</span>
+          <input id="dueDateInput" type="date">
+        </label>
+
+        <div class="score-row">
+          <label>
+            <span>Residual Probability</span>
+            <input id="residualProbabilityInput" type="range" min="1" max="5" step="1">
+            <strong id="residualProbabilityValue">2</strong>
+          </label>
+          <label>
+            <span>Residual Impact</span>
+            <input id="residualImpactInput" type="range" min="1" max="5" step="1">
+            <strong id="residualImpactValue">2</strong>
+          </label>
+          <div class="score-preview residual">
+            <span>Residual score</span>
+            <strong id="residualScorePreview">4</strong>
+          </div>
+        </div>
+
+        <div class="dialog-actions">
+          <button type="button" id="deleteRiskButton" class="danger-button">Delete</button>
+          <div>
+            <button type="button" id="cancelButton">Cancel</button>
+            <button class="primary-action" type="submit">Save Risk</button>
+          </div>
+        </div>
+      </form>
+    </dialog>
+
+    <script src="app.js"></script>
+  </body>
+</html>
