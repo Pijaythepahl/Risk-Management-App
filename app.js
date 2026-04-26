@@ -219,12 +219,19 @@ function renderHeatmap() {
   risks.slice(0, MAX_RISKS).forEach((risk, index) => {
     const inherentPoint = heatmapPoint(risk.impact, risk.probability);
     const residualPoint = heatmapPoint(risk.residualImpact, risk.residualProbability);
-    const offset = markerOffsets[index % markerOffsets.length];
+    const offset = markerOffsetFor(index);
 
     drawRiskArrow(inherentPoint, residualPoint);
     drawRiskMarker(`R${index + 1}`, "inherent", inherentPoint, offset, risk.title);
     drawRiskMarker(`M${index + 1}`, "residual", residualPoint, { x: offset.x * -1, y: offset.y * -1 }, risk.title);
   });
+}
+
+function markerOffsetFor(index) {
+  if (window.matchMedia("(max-width: 679px)").matches) {
+    return { x: 0, y: 0 };
+  }
+  return markerOffsets[index % markerOffsets.length];
 }
 
 function renderHeatmapScales() {
@@ -565,5 +572,6 @@ elements.riskList.addEventListener("click", (event) => {
 
 elements.exportButton.addEventListener("click", exportRisks);
 elements.importInput.addEventListener("change", importRisks);
+window.addEventListener("resize", () => renderHeatmap());
 
 render();

@@ -194,11 +194,11 @@ label span {
 
 .heatmap-wrap {
   display: grid;
-  grid-template-columns: auto minmax(74px, 0.78fr) minmax(0, 2fr);
-  gap: 0.35rem;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.5rem;
   max-width: 100%;
-  overflow: hidden;
-  padding: 0 0.65rem 1rem;
+  overflow: visible;
+  padding: 0 1rem 1rem;
 }
 
 .axis-title {
@@ -211,36 +211,45 @@ label span {
 
 .probability-title {
   align-self: center;
+  grid-column: 1;
+  grid-row: 1;
   writing-mode: vertical-rl;
   transform: rotate(180deg);
 }
 
 .impact-title {
-  grid-column: 3;
+  grid-column: 2;
+  grid-row: 3;
   text-align: center;
 }
 
 .probability-scale,
 .impact-scale {
   color: var(--muted);
-  font-size: 0.6rem;
+  font-size: 0.68rem;
   font-weight: 750;
   min-width: 0;
 }
 
 .probability-scale {
-  display: grid;
-  grid-template-rows: repeat(5, 1fr);
-  gap: 0;
+  grid-column: 1 / -1;
+  grid-row: 2;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
 }
 
 .axis-label {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
   gap: 0.25rem;
   min-height: 0;
-  text-align: right;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface-strong);
+  padding: 0.28rem 0.38rem;
+  text-align: left;
 }
 
 .axis-label strong {
@@ -253,28 +262,31 @@ label span {
 }
 
 .impact-scale {
-  grid-column: 3;
-  display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 0.15rem;
+  grid-column: 1 / -1;
+  grid-row: 4;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
 }
 
 .impact-scale .axis-label {
-  display: block;
+  display: flex;
   min-height: auto;
-  padding-top: 0.25rem;
-  text-align: center;
+  padding-top: 0.28rem;
+  text-align: left;
 }
 
 .impact-scale .axis-label strong,
 .impact-scale .axis-label span {
-  display: block;
+  display: inline;
 }
 
 .heatmap-stage {
   position: relative;
+  grid-column: 2;
+  grid-row: 1;
   min-width: 0;
-  overflow: hidden;
+  overflow: visible;
   aspect-ratio: 1 / 1;
 }
 
@@ -299,7 +311,7 @@ label span {
 }
 
 .heatmap-arrows {
-  overflow: hidden;
+  overflow: visible;
 }
 
 .risk-arrow {
@@ -617,6 +629,56 @@ textarea {
     grid-template-columns: auto 170px minmax(0, 1fr);
     gap: 0.45rem;
     padding: 0 1rem 1rem;
+  }
+
+  .probability-title {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .probability-scale {
+    grid-column: 2;
+    grid-row: 1;
+    display: grid;
+    grid-template-rows: repeat(5, 1fr);
+    gap: 0;
+  }
+
+  .heatmap-stage {
+    grid-column: 3;
+    grid-row: 1;
+  }
+
+  .impact-title {
+    grid-column: 3;
+    grid-row: 2;
+  }
+
+  .impact-scale {
+    grid-column: 3;
+    grid-row: 3;
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 0.15rem;
+  }
+
+  .axis-label {
+    justify-content: flex-end;
+    border: 0;
+    background: transparent;
+    padding: 0;
+    text-align: right;
+  }
+
+  .impact-scale .axis-label {
+    display: block;
+    padding-top: 0.25rem;
+    text-align: center;
+  }
+
+  .impact-scale .axis-label strong,
+  .impact-scale .axis-label span {
+    display: block;
   }
 
   .probability-scale,
